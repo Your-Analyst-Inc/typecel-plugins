@@ -1,0 +1,17 @@
+{
+  "name": "typecel",
+  "owner": {
+    "name": "Typecel"
+  },
+  "description": "Agent skills for building financial models in Typecel Studio.",
+  "plugins": [
+    {
+      "name": "typecel-modeling",
+      "source": "./plugins/typecel-modeling",
+      "description": "Build and edit financial models through the Typecel Studio MCP server - three-statement models, roll-forwards, KPI trees, source-backed citations.",
+      "author": {
+        "name": "Typecel"
+      }
+    }
+  ]
+}

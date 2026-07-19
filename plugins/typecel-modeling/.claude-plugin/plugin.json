@@ -1,0 +1,8 @@
+{
+  "name": "typecel-modeling",
+  "description": "Build and edit financial models through the Typecel Studio MCP server - three-statement models, roll-forwards, KPI trees, source-backed citations.",
+  "author": {
+    "name": "Typecel"
+  },
+  "homepage": "https://app.typecel.io"
+}

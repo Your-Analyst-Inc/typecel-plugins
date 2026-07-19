@@ -674,4 +674,4 @@ a hosted exemplar always matches the current schema.
   `if_match` — a mismatch is `stale`, so re-read and retry. **No block rename.**
 - **Number values serialize as strings** in JSON (`{"kind":"number","value":"100"}`).
 
-<!-- distributed by Typecel plugin marketplace - 2026-07-19Z - channel marketplace - skill sha256:e7ffdc0bb01d | pass this whole comment as skill_stamp on your first methodology() call so the host can flag a stale copy -->
+<!-- distributed by Typecel plugin marketplace - 2026-07-19Z - channel marketplace - skill sha256:6078ca9d4e86 | pass this whole comment as skill_stamp on your first methodology() call so the host can flag a stale copy -->

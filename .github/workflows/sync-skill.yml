@@ -1,0 +1,33 @@
+name: Sync skill
+
+on:
+  schedule:
+    - cron: "20 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-skill
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the skill from the production host and restamp
+        run: python3 scripts/sync_skill.py
+      - name: Commit if changed
+        run: |
+          if git diff --quiet; then
+            echo "no change"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins/typecel-modeling/skills/typecel-modeling/SKILL.md
+          git commit -m "sync: typecel-modeling skill from the production host"
+          git push

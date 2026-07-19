@@ -17,8 +17,9 @@ against a connected Typecel Studio MCP server.
 
 ## Updates
 
-The skill content is published here automatically from the Typecel source repository whenever it
-changes; every synced commit is a new plugin version. Auto-update for third-party marketplaces is
+The skill content is synced here daily by CI from the production host's public skill endpoint
+(`GET /skills`), so it always matches what deployed hosts accept; every synced commit is a new
+plugin version. Auto-update for third-party marketplaces is
 off by default in Claude Code - turn it on for this marketplace in `/plugin` → Marketplaces, or pull
 manually:
 
@@ -32,6 +33,6 @@ If you are not using Claude Code, the same skill is also served as a zip by any 
 
 ## Contributing
 
-`plugins/typecel-modeling/skills/typecel-modeling/SKILL.md` is generated - it is synced from the
-Typecel source repository by CI, and the trailing HTML comment is a distribution stamp added during
-sync. Do not edit it here; changes land upstream.
+`plugins/typecel-modeling/skills/typecel-modeling/SKILL.md` is generated - CI (`sync-skill.yml`)
+pulls it from the production host and appends the trailing distribution-stamp comment. Do not edit
+it here; changes land in the Typecel source repository and arrive with the next deploy.

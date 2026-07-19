@@ -1,7 +1,8 @@
 {
   "name": "typecel",
   "owner": {
-    "name": "Typecel"
+    "name": "Typecel",
+    "email": "support@typecel.io"
   },
   "description": "Agent skills for building financial models in Typecel Studio.",
   "plugins": [

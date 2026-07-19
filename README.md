@@ -15,6 +15,25 @@ mental model, the virtual-filesystem editing surface, and the source-citation tr
 The skill triggers automatically whenever you ask Claude to build or change a financial model
 against a connected Typecel Studio MCP server.
 
+Codex CLI users can install from the same repository:
+
+```
+codex plugin marketplace add Your-Analyst-Inc/typecel-plugins
+codex plugin add typecel-modeling@typecel
+```
+
+## Example prompts
+
+- "Using the typecel-modeling skill, build a three-statement model (P&L, balance sheet, cash flow)
+  for a subscription software company with two revenue segments, quarterly from FY2024 through
+  FY2027. Orient before your first write: call methodology() and grammar() first."
+- "Using the typecel-modeling skill, open my existing model and capture the latest results
+  presentation from the company's IR page, transcribe the full-year actuals into the historical
+  sheets with citations, then verify the citations."
+- "Using the typecel-modeling skill, add working-capital roll-forwards (receivables, payables,
+  inventory) to my model, declare a balance check and a minimum-cash covenant over the forecast,
+  then read the checks and report the verdicts."
+
 ## Updates
 
 The skill content is synced here daily by CI from the production host's public skill endpoint
@@ -30,6 +49,12 @@ manually:
 
 If you are not using Claude Code, the same skill is also served as a zip by any Typecel host at
 `GET /skills/typecel-modeling.zip`, ready for upload to claude.ai or ChatGPT.
+
+## Support and privacy
+
+Support: [support@typecel.io](mailto:support@typecel.io). The skill drives the Typecel Studio
+service; its privacy policy is at
+[app.typecel.io/legal/privacy.html](https://app.typecel.io/legal/privacy.html).
 
 ## Contributing
 

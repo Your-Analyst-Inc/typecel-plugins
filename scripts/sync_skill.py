@@ -21,9 +21,11 @@ import sys
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 HOST = "https://app.typecel.io/api"
+# The production edge rejects the default Python-urllib user agent.
+UA = {"User-Agent": "typecel-plugins-sync/1.0"}
 NAME = "typecel-modeling"
 DEST = Path("plugins/typecel-modeling/skills/typecel-modeling/SKILL.md")
 HOST_STAMP = re.compile(r"\n*<!-- distributed by Typecel host [^\n]* -->\n*\Z")
@@ -35,14 +37,14 @@ def canonical(content: str) -> str:
 
 
 def main() -> int:
-    index = json.load(urlopen(f"{HOST}/skills", timeout=30))
+    index = json.load(urlopen(Request(f"{HOST}/skills", headers=UA), timeout=30))
     entry = next((s for s in index if s.get("name") == NAME), None)
     if entry is None:
         served = [s.get("name") for s in index]
         print(f"host does not serve {NAME} yet (serves: {served}); nothing to sync")
         return 0
 
-    zip_bytes = urlopen(f"{HOST}/skills/{NAME}.zip", timeout=60).read()
+    zip_bytes = urlopen(Request(f"{HOST}/skills/{NAME}.zip", headers=UA), timeout=60).read()
     with zipfile.ZipFile(io.BytesIO(zip_bytes)) as archive:
         delivered = archive.read(f"{NAME}/SKILL.md").decode("utf-8")
 

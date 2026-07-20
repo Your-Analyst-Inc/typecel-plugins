@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "typecel-studio": {
+      "type": "http",
+      "url": "https://app.typecel.io/api/mcp"
+    }
+  }
+}

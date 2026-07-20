@@ -2,8 +2,10 @@
 
 Claude Code plugin marketplace for [Typecel Studio](https://app.typecel.io), a financial-modelling
 environment your coding agent edits through an MCP server. The one plugin here, **typecel-modeling**,
-carries the agent skill that teaches Claude how to author Typecel models: the declarative language's
-mental model, the virtual-filesystem editing surface, and the source-citation trust loop.
+carries both halves of the integration: the agent skill that teaches Claude how to author Typecel
+models (the declarative language's mental model, the virtual-filesystem editing surface, the
+source-citation trust loop), and the **Typecel Studio MCP server connection** (`typecel-studio`,
+bundled via `.mcp.json`) - installing the plugin wires the connector too.
 
 ## Install
 
@@ -12,10 +14,13 @@ mental model, the virtual-filesystem editing surface, and the source-citation tr
 /plugin install typecel-modeling@typecel
 ```
 
-The skill triggers automatically whenever you ask Claude to build or change a financial model
-against a connected Typecel Studio MCP server.
+Then authenticate the bundled `typecel-studio` server once via `/mcp` (OAuth - sign in with your
+Typecel account; the token is stored and refreshed automatically). The skill triggers automatically
+whenever you ask Claude to build or change a financial model.
 
-Codex CLI users can install from the same repository:
+Codex CLI users install from the same repository; the skill declares the MCP server as a
+dependency, so Codex offers to install and authenticate it when the skill first runs
+(`codex mcp login typecel-studio` does it explicitly):
 
 ```
 codex plugin marketplace add Your-Analyst-Inc/typecel-plugins
@@ -47,8 +52,13 @@ manually:
 /plugin update typecel-modeling@typecel
 ```
 
-If you are not using Claude Code, the same skill is also served as a zip by any Typecel host at
-`GET /skills/typecel-modeling.zip`, ready for upload to claude.ai or ChatGPT.
+On claude.ai (paid plans), you can sync this marketplace from Customize > Plugins > Add
+marketplace - the skill then works in web chat. The bundled MCP server does not carry to the web
+surface: connect Typecel there once as a connector (`https://app.typecel.io/api/mcp`).
+
+If you are using neither Claude Code nor a synced marketplace, the same skill is also served as a
+zip by any Typecel host at `GET /skills/typecel-modeling.zip`, ready for upload to claude.ai or
+ChatGPT.
 
 ## Support and privacy
 
@@ -60,4 +70,6 @@ service; its privacy policy is at
 
 `plugins/typecel-modeling/skills/typecel-modeling/SKILL.md` is generated - CI (`sync-skill.yml`)
 pulls it from the production host and appends the trailing distribution-stamp comment. Do not edit
-it here; changes land in the Typecel source repository and arrive with the next deploy.
+it here; changes land in the Typecel source repository and arrive with the next deploy. The
+`.mcp.json` server bundle and the skill's `agents/openai.yaml` dependency sidecar are maintained
+in this repository directly.

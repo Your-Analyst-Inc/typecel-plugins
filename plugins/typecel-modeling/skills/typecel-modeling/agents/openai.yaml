@@ -1,0 +1,7 @@
+dependencies:
+  tools:
+    - type: mcp
+      value: typecel-studio
+      description: Typecel Studio MCP server - the skill builds and edits financial models through it
+      transport: streamable_http
+      url: https://app.typecel.io/api/mcp

@@ -28,6 +28,7 @@ HOST = "https://app.typecel.io/api"
 UA = {"User-Agent": "typecel-plugins-sync/1.0"}
 NAME = "typecel-modeling"
 DEST = Path("plugins/typecel-modeling/skills/typecel-modeling/SKILL.md")
+MANIFEST = Path("plugins/typecel-modeling/.claude-plugin/plugin.json")
 HOST_STAMP = re.compile(r"\n*<!-- distributed by Typecel host [^\n]* -->\n*\Z")
 MARKET_STAMP_HASH = re.compile(r"skill sha256:([0-9a-f]{6,64})")
 
@@ -64,6 +65,14 @@ def main() -> int:
         " methodology() call so the host can flag a stale copy -->"
     )
     DEST.write_text(f"{content}\n\n{stamp}\n", encoding="utf-8")
+
+    # Bump the manifest version to the host calver: claude.ai org marketplace auto-sync fires only
+    # on version-bump merges, and Claude Code treats a declared version as the update trigger.
+    # Manual (non-sync) content commits must bump this by hand - see the README.
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    manifest["version"] = str(entry.get("hostVersion"))
+    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
     print(
         f"updated to host {entry.get('hostVersion')} schema v{entry.get('schemaVersion')}"
         f" (skill sha256:{digest})"

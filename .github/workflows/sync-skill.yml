@@ -28,6 +28,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add plugins/typecel-modeling/skills/typecel-modeling/SKILL.md
+          git add plugins/typecel-modeling/skills/typecel-modeling/SKILL.md \
+                  plugins/typecel-modeling/.claude-plugin/plugin.json
           git commit -m "sync: typecel-modeling skill from the production host"
           git push

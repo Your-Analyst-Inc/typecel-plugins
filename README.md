@@ -73,3 +73,8 @@ pulls it from the production host and appends the trailing distribution-stamp co
 it here; changes land in the Typecel source repository and arrive with the next deploy. The
 `.mcp.json` server bundle and the skill's `agents/openai.yaml` dependency sidecar are maintained
 in this repository directly.
+
+The `version` in `plugin.json` is the update trigger for clients that honour it (Claude Code, and
+claude.ai organisation marketplace auto-sync). The sync sets it to the host calver automatically
+when the skill content changes; a manual commit that changes any other plugin content must bump it
+by hand in the same commit.

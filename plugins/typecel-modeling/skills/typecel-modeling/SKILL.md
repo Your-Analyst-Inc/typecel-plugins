@@ -32,6 +32,11 @@ the index first, then the topics matching the task. `grammar` answers how to
 write the JSON, `methodology` answers what to build. Both serve the RUNNING
 host, so what you read always matches the schema the host accepts — never guess
 a shape, and call `grammar("common-mistakes")` when a write is rejected.
+**Scale the orientation to the task**: building from scratch warrants the full
+sweep, but when you are editing an existing model (or extending a provided
+skeleton), read only the topics for the block kinds you will touch — the
+model in front of you already shows the shapes, and every unread topic is
+context you keep.
 
 ## 1. The surface — a virtual filesystem
 
@@ -72,7 +77,9 @@ checks summary (`checks: {allGreen, failCount, indeterminateCount}`) — never t
 whole evaluated model. The counts are the gate and `delta` tells you what THIS
 write broke or fixed; pull `read_diagnostics` (filter by sheet path / severity /
 code) when the head isn't enough, and inspect computed numbers per sheet with
-`read_values`.
+`read_values` — sparingly: it is the largest read on the surface (every cell of
+a sheet, evaluated), so let acks and `read_checks` answer "is it right?" and
+reach for `read_values` only when you need the numbers themselves.
 
 > **Legacy flat hosts.** If `ls(model, "")` returns the bare field names
 > `["settings","bindings","assertions","model"]` instead of typed `{name, kind}`
@@ -229,6 +236,13 @@ budgets, batch `cells`, receipts). The doctrine:
   page, the regulatory filing — over news articles or aggregators. A secondary
   source is a disclosed fallback: say what you used and why the primary wasn't
   available.
+- **One filing rarely covers the whole actual era.** An annual filing prints
+  comparatives for TWO fiscal years (a Japanese annual securities report shows
+  the year and its prior), so count backward from what the model needs: three
+  actual years plus an opening balance reach back one year further than the
+  latest two filings cover — capture as many prior-year filings as it takes to
+  reach the opening (or another source that carries it), and plan the captures
+  before transcribing, not when the earliest year comes up empty.
 - **A new edition of a document is a new source.** Capture the Q2 databook under
   its own name next to Q1, never replace it — sources are immutable archives and
   existing citations keep pointing at the edition they verified against.
@@ -246,7 +260,15 @@ budgets, batch `cells`, receipts). The doctrine:
   proves a page exists but holds no single number, so a page-level `cite` fails
   honestly. A box verifies when it contains
   exactly one printed number **as printed** — sign, percent, or parentheses
-  included; never carve marks off to make a box verify. Hand-drawn boxes (via
+  included; never carve marks off to make a box verify. Japanese filings print
+  negatives as a leading triangle (`△6,508`): the box encloses the triangle,
+  and the transcription stores the value as printed. Verification accepts
+  either sign — a source's sign is display convention; the model's own sign
+  system (row polarity, debit/credit) owns the business sign — so the badge
+  cannot catch a double-applied sign. After citing a triangle figure, check
+  the CONTRIBUTION: a negative value on a row whose polarity also negates is
+  the classic double flip, and it wears a green badge while adding what
+  should subtract. Hand-drawn boxes (via
   `view_source_page`) are the fallback: confirm twice — the framed page image
   and a `locate_source` echo — before citing. Re-read OCR pages and take their
   confidence disclosures seriously. If no box can verify, write the value
@@ -319,4 +341,4 @@ traps no topic states:
   watched Series line, not a KPI tree node — every tree layer connects by
   arithmetic.
 
-<!-- distributed by Typecel plugin marketplace - 2026-07-19Z - channel marketplace - skill sha256:b75fb1450ecb | pass this whole comment as skill_stamp on your first methodology() call so the host can flag a stale copy -->
+<!-- distributed by Typecel plugin marketplace - 2026-07-21Z - channel marketplace - skill sha256:abc8a4eae71b | pass this whole comment as skill_stamp on your first methodology() call so the host can flag a stale copy -->
